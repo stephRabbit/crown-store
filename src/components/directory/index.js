@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 
-import './directory.scss'
 import MenuItem from '../menu-item'
+
+import './directory.scss'
 
 const sectionsItems = [
   {

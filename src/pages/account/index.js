@@ -1,8 +1,8 @@
 import React from 'react'
 
-import './account.scss'
-
 import SignIn from '../../components/sign-in'
+
+import './account.scss'
 
 function Account() {
   return (

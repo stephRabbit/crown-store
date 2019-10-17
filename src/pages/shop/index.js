@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 
-import './shop.scss'
 import SHOP_DATA from './shop.data'
 
 import CollectionPreview from '../../components/collection-preview'
+
+import './shop.scss'
 
 function Shop() {
   const [collections] = useState(SHOP_DATA)
