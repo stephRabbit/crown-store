@@ -8,13 +8,13 @@ import { auth, createUserProfileDocument } from '../../firebase'
 import './sign-up.scss'
 
 const SigUp = () => {
-  const initialSate = {
+  const initialState = {
     displayName: '',
     email: '',
     password: '',
     confirmPassword: ''
   }
-  const [formData, setFormData] = useState(initialSate)
+  const [formData, setFormData] = useState(initialState)
 
   const { displayName, email, password, confirmPassword } = formData
 
@@ -32,7 +32,7 @@ const SigUp = () => {
       )
 
       await createUserProfileDocument(user, { displayName })
-      setFormData(initialSate)
+      setFormData(initialState)
     } catch (err) {
       console.error(err)
     }
