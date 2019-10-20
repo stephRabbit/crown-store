@@ -1,5 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Route, Switch } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+import { setCurrentUser } from './store/ducks/user/actions'
 
 import Header from './components/header'
 import HomePage from './pages/homepage'
@@ -10,8 +13,7 @@ import { auth, createUserProfileDocument } from './firebase'
 
 import './App.css'
 
-function App() {
-  const [currentUser, setCurrentUser] = useState(null)
+function App({ setCurrentUser }) {
   const unsubscribeFromAuth = useRef(null)
 
   useEffect(() => {
@@ -31,11 +33,11 @@ function App() {
     return () => {
       unsubscribeFromAuth.current()
     }
-  }, [unsubscribeFromAuth])
+  }, [unsubscribeFromAuth, setCurrentUser])
 
   return (
     <>
-      <Header currentUser={currentUser} />
+      <Header />
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route path='/shop' component={Shop} />
@@ -45,4 +47,7 @@ function App() {
   )
 }
 
-export default App
+export default connect(
+  null,
+  { setCurrentUser }
+)(App)
