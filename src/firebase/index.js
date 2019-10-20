@@ -2,7 +2,6 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
 
-// Your web app's Firebase configuration
 var firebaseConfig = {
   apiKey: process.env.REACT_APP_FB_API_KEY,
   authDomain: 'crwn-clothes-67ccb.firebaseapp.com',
@@ -13,7 +12,30 @@ var firebaseConfig = {
   appId: '1:773715063800:web:1ee4d6f5c861b0f539dc0d'
 }
 
-// Initialize Firebase
+export const createUserProfileDocument = async (userAuth, extraData) => {
+  if (!userAuth) return
+  const userRef = firestore.doc(`users/${userAuth.uid}`)
+  const snapShot = await userRef.get()
+
+  if (!snapShot.exists) {
+    const { displayName, email } = userAuth
+    const createdAt = new Date()
+
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        createdAt,
+        ...extraData
+      })
+    } catch (err) {
+      console.error('Error creating user', err)
+    }
+  }
+
+  return userRef
+}
+
 firebase.initializeApp(firebaseConfig)
 
 export const auth = firebase.auth()

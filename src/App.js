@@ -6,7 +6,7 @@ import HomePage from './pages/homepage'
 import Shop from './pages/shop'
 import Account from './pages/account'
 
-import { auth } from './firebase'
+import { auth, createUserProfileDocument } from './firebase'
 
 import './App.css'
 
@@ -15,14 +15,23 @@ function App() {
   const unsubscribeFromAuth = useRef(null)
 
   useEffect(() => {
-    unsubscribeFromAuth.current = auth.onAuthStateChanged(user => {
-      setCurrentUser(user)
+    unsubscribeFromAuth.current = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth)
+        userRef.onSnapshot(snapShot => {
+          setCurrentUser({
+            id: snapShot.id,
+            ...snapShot.data()
+          })
+        })
+      }
+      setCurrentUser(userAuth)
     })
 
     return () => {
       unsubscribeFromAuth.current()
     }
-  }, [])
+  }, [unsubscribeFromAuth])
 
   return (
     <>
