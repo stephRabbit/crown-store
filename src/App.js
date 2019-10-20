@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { setCurrentUser } from './store/ducks/user/actions'
@@ -13,7 +13,7 @@ import { auth, createUserProfileDocument } from './firebase'
 
 import './App.css'
 
-function App({ setCurrentUser }) {
+function App({ setCurrentUser, currentUser }) {
   const unsubscribeFromAuth = useRef(null)
 
   useEffect(() => {
@@ -41,13 +41,21 @@ function App({ setCurrentUser }) {
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route path='/shop' component={Shop} />
-        <Route path='/signin' component={Account} />
+        <Route
+          exact
+          path='/signin'
+          render={() => (currentUser ? <Redirect to='/' /> : <Account />)}
+        />
       </Switch>
     </>
   )
 }
 
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser
+})
+
 export default connect(
-  null,
+  mapStateToProps,
   { setCurrentUser }
 )(App)
