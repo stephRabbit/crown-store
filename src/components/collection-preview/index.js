@@ -12,8 +12,8 @@ function CollectionPreview({ title, items }) {
         {/* TODO: Performance concern - array chain called everytime component get rendered  */}
         {items
           .filter((item, idx) => idx < 4)
-          .map(({ id, ...rest }) => (
-            <CollectionItem key={id} {...rest} />
+          .map(item => (
+            <CollectionItem key={item.id} item={item} />
           ))}
       </div>
     </div>
