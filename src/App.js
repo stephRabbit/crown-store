@@ -1,13 +1,16 @@
 import React, { useEffect, useRef } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
 
 import { setCurrentUser } from './store/ducks/user/actions'
+import { selectCurrentUser } from './store/ducks/user/selectors'
 
 import Header from './components/header'
 import HomePage from './pages/homepage'
 import Shop from './pages/shop'
 import Account from './pages/account'
+import Checkout from './pages/checkout'
 
 import { auth, createUserProfileDocument } from './firebase'
 
@@ -41,6 +44,7 @@ function App({ setCurrentUser, currentUser }) {
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route path='/shop' component={Shop} />
+        <Route exact path='/checkout' component={Checkout} />
         <Route
           exact
           path='/signin'
@@ -51,8 +55,8 @@ function App({ setCurrentUser, currentUser }) {
   )
 }
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
 })
 
 export default connect(
