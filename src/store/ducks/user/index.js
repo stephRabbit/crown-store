@@ -1,10 +1,10 @@
 import UserTypes from './types'
 
-const initialState = {
+const INITIAL_STATE = {
   currentUser: null
 }
 
-function user(state = initialState, action) {
+function user(state = INITIAL_STATE, action) {
   switch (action.type) {
     case UserTypes.SET_CURRENT_USER:
       return {
