@@ -8,7 +8,7 @@ function CollectionPreview({ title, items }) {
   return (
     <div className='collection-preview'>
       <h1 className='title'>{title}</h1>
-      <div className='preview'>
+      <div className='items'>
         {/* TODO: Performance concern - array chain called everytime component get rendered  */}
         {items
           .filter((item, idx) => idx < 4)
