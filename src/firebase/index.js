@@ -3,7 +3,7 @@ import 'firebase/firestore'
 import 'firebase/auth'
 
 var firebaseConfig = {
-  apiKey: process.env.REACT_APP_FB_API_KEY,
+  apiKey: 'AIzaSyAi9BtFq3QPcy7T-_pfEO3rFNWexCxeaBk',
   authDomain: 'crwn-clothes-67ccb.firebaseapp.com',
   databaseURL: 'https://crwn-clothes-67ccb.firebaseio.com',
   projectId: 'crwn-clothes-67ccb',
