@@ -8,6 +8,7 @@ import {
 } from '../../store/ducks/cart/selectors'
 
 import CheckoutItem from '../../components/checkout-item'
+import StripeCheckoutButton from '../../components/stripe-checkout-button'
 
 import './checkout.scss'
 
@@ -37,6 +38,12 @@ const Checkout = ({ cartItems, totalPrice }) => {
       <div className='total'>
         <span>Total: ${totalPrice}</span>
       </div>
+      <div className='test-warning'>
+        *Test Credit Card
+        <br />
+        4242 4242 4242 4242 - 01/20 - 123
+      </div>
+      <StripeCheckoutButton price={totalPrice} />
     </div>
   )
 }
