@@ -6,14 +6,14 @@ import { selectDirectorySections } from '../../store/ducks/directory/selectors'
 
 import MenuItem from '../menu-item'
 
-import './directory.scss'
+import { DirectoryMenuContainer } from './styles'
 
 const Directory = ({ sections }) => {
   return (
-    <div className='directory-menu'>
+    <DirectoryMenuContainer>
       {sections &&
         sections.map(({ id, ...rest }) => <MenuItem key={id} {...rest} />)}
-    </div>
+    </DirectoryMenuContainer>
   )
 }
 

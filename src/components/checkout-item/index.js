@@ -7,17 +7,23 @@ import {
   removeItem
 } from '../../store/ducks/cart/actions'
 
-import './checkout-item.scss'
+import {
+  CheckoutItemContainer,
+  ImageContainer,
+  TextContainer,
+  QuantityContainer,
+  RemoveButtonContainer
+} from './styles'
 
 const CheckoutItem = ({ item, addItem, removeItem, clearCartItem }) => {
   const { imageUrl, name, quantity, price } = item
   return (
-    <div className='checkout-item'>
-      <div className='image-container'>
+    <CheckoutItemContainer>
+      <ImageContainer>
         <img src={imageUrl} alt='item' />
-      </div>
-      <span className='name'>{name}</span>
-      <span className='quantity'>
+      </ImageContainer>
+      <TextContainer>{name}</TextContainer>
+      <QuantityContainer>
         <div className='arrow' onClick={() => removeItem(item)}>
           &#10094;
         </div>
@@ -25,12 +31,12 @@ const CheckoutItem = ({ item, addItem, removeItem, clearCartItem }) => {
         <div className='arrow' onClick={() => addItem(item)}>
           &#10095;
         </div>
-      </span>
-      <span className='price'>{price}</span>
-      <div className='remove-button' onClick={() => clearCartItem(item)}>
+      </QuantityContainer>
+      <TextContainer>{price}</TextContainer>
+      <RemoveButtonContainer onClick={() => clearCartItem(item)}>
         &#10005;
-      </div>
-    </div>
+      </RemoveButtonContainer>
+    </CheckoutItemContainer>
   )
 }
 

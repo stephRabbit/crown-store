@@ -3,14 +3,14 @@ import React from 'react'
 import SignIn from '../../components/sign-in'
 import SignUp from '../../components/sign-up'
 
-import './account.scss'
+import { AccountContainer } from './styles'
 
 function Account() {
   return (
-    <div className='account'>
+    <AccountContainer>
       <SignIn />
       <SignUp />
-    </div>
+    </AccountContainer>
   )
 }
 

@@ -5,16 +5,16 @@ import { createStructuredSelector } from 'reselect'
 import { toggleCartHidden } from '../../store/ducks/cart/actions'
 import { selectCartItemsCount } from '../../store/ducks/cart/selectors'
 
-import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg'
-
-import './cart-icon.scss'
+import { CartContainer, ShoppingIcon, ItemCountContainer } from './styles'
 
 const CartIcon = ({ toggleCartHidden, itemCount }) => {
   return (
-    <div className='cart-icon' onClick={toggleCartHidden}>
+    <CartContainer onClick={toggleCartHidden}>
       <ShoppingIcon className='shopping-icon' />
-      <span className='item-count'>{itemCount}</span>
-    </div>
+      <ItemCountContainer className='item-count'>
+        {itemCount}
+      </ItemCountContainer>
+    </CartContainer>
   )
 }
 

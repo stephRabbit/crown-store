@@ -3,33 +3,37 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { withRouter } from 'react-router-dom'
 
-import { toggleCartHidden } from '../../store/ducks/cart/actions'
-import { selectCartItems } from '../../store/ducks/cart/selectors'
-
-import CustomButton from '../custom-button'
 import CartItem from '../cart-item'
+import { selectCartItems } from '../../store/ducks/cart/selectors'
+import { toggleCartHidden } from '../../store/ducks/cart/actions'
 
-import './cart-dropdown.scss'
+import {
+  CartDropdownContainer,
+  CartDropdownButton,
+  EmptyMessageContainer,
+  CartItemsContainer
+} from './styles'
 
-const CartDropdown = ({ cartItems, history, toggleCartHidden }) => {
+const CartDropdown = ({ cartItems, history, dispatch }) => {
   const goToCart = () => {
     history.push('/checkout')
-    toggleCartHidden()
+    dispatch(toggleCartHidden())
   }
-
   return (
-    <div className='cart-dropdown'>
-      <div className='cart-items'>
+    <CartDropdownContainer>
+      <CartItemsContainer>
         {cartItems.length ? (
-          cartItems.map(item => <CartItem key={item.id} item={item} />)
+          cartItems.map(cartItem => (
+            <CartItem key={cartItem.id} item={cartItem} />
+          ))
         ) : (
-          <span className='empty-message'>Your cart is empty!</span>
+          <EmptyMessageContainer>Your cart is empty</EmptyMessageContainer>
         )}
-      </div>
-      <CustomButton inverted onClick={goToCart}>
-        Go to Checkout
-      </CustomButton>
-    </div>
+      </CartItemsContainer>
+      <CartDropdownButton inverted onClick={goToCart}>
+        GO TO CHECKOUT
+      </CartDropdownButton>
+    </CartDropdownContainer>
   )
 }
 
@@ -37,9 +41,4 @@ const mapStateToProps = createStructuredSelector({
   cartItems: selectCartItems
 })
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    { toggleCartHidden }
-  )(CartDropdown)
-)
+export default withRouter(connect(mapStateToProps)(CartDropdown))

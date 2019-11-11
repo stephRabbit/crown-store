@@ -6,15 +6,15 @@ import { selectShopCollectionsForPreview } from '../../store/ducks/shop/selector
 
 import CollectionPreview from '../collection-preview'
 
-import './collections-overview.scss'
+import { CollectionOverviewContainer } from './styles'
 
 const collectionsOverview = ({ collections }) => {
   return (
-    <div className='collections-overview'>
+    <CollectionOverviewContainer>
       {collections.map(({ id, ...rest }) => (
         <CollectionPreview key={id} {...rest} />
       ))}
-    </div>
+    </CollectionOverviewContainer>
   )
 }
 

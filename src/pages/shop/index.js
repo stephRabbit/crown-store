@@ -4,8 +4,6 @@ import { Route } from 'react-router-dom'
 import CollectionsOverview from '../../components/collections-overview'
 import CollectionPage from '../collection'
 
-import './shop.scss'
-
 function Shop({ match }) {
   return (
     <div className='shop-page'>

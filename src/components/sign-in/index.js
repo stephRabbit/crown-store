@@ -6,7 +6,7 @@ import CustomButton from '../custom-button'
 import { signInWithGoogle } from '../../firebase'
 import { auth } from '../../firebase'
 
-import './sign-in.scss'
+import { SignInContainer, SignInTitle, ButtonsBarContainer } from './styles'
 
 function SignIn() {
   const initialState = { password: '', email: '' }
@@ -35,8 +35,8 @@ function SignIn() {
   }
 
   return (
-    <div className='sign-in'>
-      <h2>I already have an account</h2>
+    <SignInContainer>
+      <SignInTitle>I already have an account</SignInTitle>
       <span>Sign in with your email and password</span>
 
       <form onSubmit={onSubmit}>
@@ -56,7 +56,7 @@ function SignIn() {
           onInputChange={onInputChange}
           label='Password'
         />
-        <div className='buttons'>
+        <ButtonsBarContainer>
           <CustomButton type='submit'>Sign In</CustomButton>
           <CustomButton
             type='button'
@@ -64,9 +64,9 @@ function SignIn() {
             onClick={signInWithGoogle}>
             Sign in with Google
           </CustomButton>
-        </div>
+        </ButtonsBarContainer>
       </form>
-    </div>
+    </SignInContainer>
   )
 }
 
