@@ -3,8 +3,15 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
+import {
+  auth,
+  createUserProfileDocument,
+  addCollectionDocuments
+} from './firebase'
+
 import { setCurrentUser } from './store/ducks/user/actions'
 import { selectCurrentUser } from './store/ducks/user/selectors'
+import { selectShopCollectionsForPreview } from './store/ducks/shop/selectors'
 
 import Header from './components/header'
 import HomePage from './pages/homepage'
@@ -12,11 +19,9 @@ import Shop from './pages/shop'
 import Account from './pages/account'
 import Checkout from './pages/checkout'
 
-import { auth, createUserProfileDocument } from './firebase'
-
 import './App.css'
 
-function App({ setCurrentUser, currentUser }) {
+function App({ setCurrentUser, currentUser, collectionsArray }) {
   const unsubscribeFromAuth = useRef(null)
 
   useEffect(() => {
@@ -31,12 +36,16 @@ function App({ setCurrentUser, currentUser }) {
         })
       }
       setCurrentUser(userAuth)
+      addCollectionDocuments(
+        'collections',
+        collectionsArray.map(({ title, items }) => ({ title, items }))
+      )
     })
 
     return () => {
       unsubscribeFromAuth.current()
     }
-  }, [unsubscribeFromAuth, setCurrentUser])
+  }, [unsubscribeFromAuth, setCurrentUser, collectionsArray])
 
   return (
     <>
@@ -56,10 +65,8 @@ function App({ setCurrentUser, currentUser }) {
 }
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
+  collectionsArray: selectShopCollectionsForPreview
 })
 
-export default connect(
-  mapStateToProps,
-  { setCurrentUser }
-)(App)
+export default connect(mapStateToProps, { setCurrentUser })(App)
