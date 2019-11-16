@@ -1,7 +1,7 @@
 import ShopTypes from './types'
-// import SHOP_DATA from './data'
+
 const INITIAL_STATE = {
-  collections: {}
+  collections: null
 }
 
 function shop(state = INITIAL_STATE, action) {
