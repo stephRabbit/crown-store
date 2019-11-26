@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 
 import FormInput from '../form-input'
 import CustomButton from '../custom-button'
 
-import { signInWithGoogle } from '../../firebase'
-import { auth } from '../../firebase'
+import {
+  emailSignInStart,
+  googleSignInStart
+} from '../../store/ducks/user/actions'
 
 import { SignInContainer, SignInTitle, ButtonsBarContainer } from './styles'
 
-function SignIn() {
+function SignIn({ googleSignInStart, emailSignInStart }) {
   const initialState = { password: '', email: '' }
   const [formData, setFormData] = useState(initialState)
   const { password, email } = formData
@@ -20,13 +23,7 @@ function SignIn() {
       return
     }
 
-    try {
-      await auth.signInWithEmailAndPassword(email, password)
-
-      setFormData(initialState)
-    } catch (err) {
-      console.error(err)
-    }
+    emailSignInStart(email, password)
   }
 
   const onInputChange = e => {
@@ -61,7 +58,7 @@ function SignIn() {
           <CustomButton
             type='button'
             isGoogleSignIn={true}
-            onClick={signInWithGoogle}>
+            onClick={googleSignInStart}>
             Sign in with Google
           </CustomButton>
         </ButtonsBarContainer>
@@ -70,4 +67,10 @@ function SignIn() {
   )
 }
 
-export default SignIn
+const mapDispatchToProps = dispatch => ({
+  googleSignInStart: () => dispatch(googleSignInStart()),
+  emailSignInStart: (email, password) =>
+    dispatch(emailSignInStart({ email, password }))
+})
+
+export default connect(null, mapDispatchToProps)(SignIn)

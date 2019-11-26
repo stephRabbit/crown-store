@@ -1,12 +1,10 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
-import { auth, createUserProfileDocument } from './firebase'
-
-import { setCurrentUser } from './store/ducks/user/actions'
 import { selectCurrentUser } from './store/ducks/user/selectors'
+import { checkUserSession } from './store/ducks/user/actions'
 
 import Header from './components/header'
 import HomePage from './pages/homepage'
@@ -16,27 +14,10 @@ import Checkout from './pages/checkout'
 
 import './App.css'
 
-function App({ setCurrentUser, currentUser }) {
-  const unsubscribeFromAuth = useRef(null)
-
+function App({ currentUser, checkUserSession }) {
   useEffect(() => {
-    unsubscribeFromAuth.current = auth.onAuthStateChanged(async userAuth => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth)
-        userRef.onSnapshot(snapShot => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data()
-          })
-        })
-      }
-      setCurrentUser(userAuth)
-    })
-
-    return () => {
-      unsubscribeFromAuth.current()
-    }
-  }, [unsubscribeFromAuth, setCurrentUser])
+    checkUserSession()
+  }, [checkUserSession])
 
   return (
     <>
@@ -59,4 +40,8 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
 })
 
-export default connect(mapStateToProps, { setCurrentUser })(App)
+const mapDispatchToProps = dispatch => ({
+  checkUserSession: () => dispatch(checkUserSession())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

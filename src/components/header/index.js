@@ -4,8 +4,8 @@ import { createStructuredSelector } from 'reselect'
 
 import { selectCartHidden } from '../../store/ducks/cart/selectors'
 import { selectCurrentUser } from '../../store/ducks/user/selectors'
+import { signOutStart } from '../../store/ducks/user/actions'
 
-import { auth } from '../../firebase'
 import CartIcon from '../cart-icon'
 import CartDropdown from '../cart-dropdown'
 
@@ -19,7 +19,7 @@ import {
   OptionLink
 } from './styles'
 
-function Header({ currentUser, hidden }) {
+function Header({ currentUser, hidden, signOutStart }) {
   return (
     <HeaderContainer>
       <LogoContainer to='/'>
@@ -29,7 +29,7 @@ function Header({ currentUser, hidden }) {
         <OptionLink to='/shop'>Shop</OptionLink>
         <OptionLink to='/contact'>Contact</OptionLink>
         {currentUser ? (
-          <OptionButton onClick={() => auth.signOut()}>Sign out</OptionButton>
+          <OptionButton onClick={signOutStart}>Sign out</OptionButton>
         ) : (
           <OptionLink to='/signin'>Sign In</OptionLink>
         )}
@@ -45,4 +45,8 @@ const mapStateToProps = createStructuredSelector({
   hidden: selectCartHidden
 })
 
-export default connect(mapStateToProps)(Header)
+const mapDispatchToProps = dispatch => ({
+  signOutStart: () => dispatch(signOutStart())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
