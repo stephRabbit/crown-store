@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 
 import FormInput from '../form-input'
 import CustomButton from '../custom-button'
 
-import { auth, createUserProfileDocument } from '../../firebase'
+import { signUpStart } from '../../store/ducks/user/actions'
 
 import { SignUpContainer, SignUpTitle } from './styles'
 
-const SigUp = () => {
+const SigUp = ({ signUpStart }) => {
   const initialState = {
     displayName: '',
     email: '',
@@ -25,17 +26,7 @@ const SigUp = () => {
       return
     }
 
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      )
-
-      await createUserProfileDocument(user, { displayName })
-      setFormData(initialState)
-    } catch (err) {
-      console.error(err)
-    }
+    signUpStart({ email, password, displayName })
   }
 
   const onInputChange = e => {
@@ -86,4 +77,8 @@ const SigUp = () => {
   )
 }
 
-export default SigUp
+const mapDispatchToProps = dispatch => ({
+  signUpStart: userCredentials => dispatch(signUpStart(userCredentials))
+})
+
+export default connect(null, mapDispatchToProps)(SigUp)

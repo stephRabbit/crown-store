@@ -7,7 +7,10 @@ const UserTypes = {
   CHECK_USER_SESSION: '@user/check_user_session',
   SIGN_OUT_START: '@user/sign_out_start',
   SIGN_OUT_SUCCESS: '@user/sign_out_success',
-  SIGN_OUT_FAIL: '@user/sign_out_fail'
+  SIGN_OUT_FAIL: '@user/sign_out_fail',
+  SIGN_UP_START: '@user/sign_up_start',
+  SIGN_UP_SUCCESS: '@user/sign_up_success',
+  SIGN_UP_FAIL: '@user/sign_up_fail'
 }
 
 export default UserTypes

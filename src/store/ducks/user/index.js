@@ -21,6 +21,7 @@ function user(state = INITIAL_STATE, action) {
       }
     case UserTypes.SIGN_IN_FAIL:
     case UserTypes.SIGN_OUT_FAIL:
+    case UserTypes.SIGN_UP_FAIL:
       return {
         ...state,
         error: action.payload
